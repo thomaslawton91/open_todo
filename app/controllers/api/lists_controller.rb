@@ -12,6 +12,17 @@ class Api::ListsController < ApiController
     end
   end
 
+  def update
+    @list = List.find(params[:id])
+    @list.assign_attributes(list_params)
+    if @list.permissions == "public" || @list.permissions == "private"
+      @list.update(list_params)
+      render json: @list
+    else
+      render json: { errors: "Permissions can only be public or private" }
+    end
+  end
+
   def destroy
     begin
       @list = List.find(params[:id])
@@ -25,6 +36,6 @@ class Api::ListsController < ApiController
   private
 
   def list_params
-    params.require(:list).permit(:name, :public)
+    params.require(:list).permit(:name, :permissions)
   end
 end

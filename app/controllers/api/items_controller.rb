@@ -11,6 +11,15 @@ class Api::ItemsController < ApiController
     end
   end
 
+  def update
+    @item = Item.find(params[:id])
+    if @item.update(item_params)
+      render json: @item
+    else
+      render json: { errors: "Permissions can only be public or private" }
+    end
+  end
+
   private
 
   def item_params

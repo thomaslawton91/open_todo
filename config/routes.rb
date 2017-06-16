@@ -9,6 +9,6 @@ namespace :api, defaults: { format: :json } do
       resources :items, only: [:create]
     end
 
-    resources :items, only: [:destroy]
+    resources :items, only: [:update, :destroy]
   end
 end
